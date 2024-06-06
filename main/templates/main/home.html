@@ -1,0 +1,210 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
+    <style>
+        :root {
+            --background-image-url: url('{% static 'main/images/back1.jpg' %}');
+        }
+        .nav-right {
+            padding-right: 20px; /* Adjust the padding value as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="messages">
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <nav class="navbar" id='navbar'>
+        <div class="nav-left">
+            <div class="logo"><a href="#main">Portify</a></div>
+            <div class="nav-item"><a href="#about-us" onclick="scrollToSection('about')">Explore</a></div>
+            <div class="nav-item"><a href="#about-us" onclick="scrollToSection('about')">Pricing</a></div>
+            <div class="nav-item"><a href="#about-us" onclick="scrollToSection('about')">About Us</a></div>
+            <div class="nav-item"><a href="#contact-us" onclick="scrollToSection('contact')">Contact Us</a></div>
+        </div>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <div class="login btn"><a href='{% url "dashboard" request.user.username %}'> Dashboard  <i class="bi bi-box-arrow-in-right"></i></a></div>
+            {% else %}
+                <div class="login btn"><a href='{% url "register" %}'> Sign In  <i class="bi bi-box-arrow-in-right"></i></a></div>
+            {% endif%}
+        </div>
+    </nav>
+
+    
+    <div class="heroBanner" id="main">
+        <div class="heroContent">
+            <div class="herotext">
+                <h1 class="heading">Elevate Your Presence Online.</h1>
+                <h2 class="subheading">Build Your Unique Portfolio Today.<br>Let Your Work Speak for itself.</h2>
+            </div>
+            <div class="heroButtons">
+                <div class="explore btn">Explore Templates</div>
+                <div class="try btn"><a href='{% url "portfolio_form" %}'>Create for Free</a></div>
+            </div>   
+        </div>
+    </div>
+
+    <div class="about-us" id="about">
+        <div class='about-text'>
+            <div class='about topic'><h1>About Us</h1></div>
+            <div class='about detail'>
+                <p>
+                "Welcome to Protify! We're a dedicated team committed to transforming ideas into reality.
+                With a diverse range of skills and a shared passion for innovation, we work collaboratively 
+                to exceed expectations. Our mission is to empower individuals and businesses to showcase 
+                their talents and projects to the world. Join us on this journey of creativity, exploration, and excellence!"
+                </p><p>
+                "At Protify, we pride ourselves on our commitment to continuous learning and 
+                growth. With each project, we embrace new challenges, refine our skills, and 
+                push the boundaries of what's possible. Beyond our professional endeavors, 
+                we're a tight-knit team of adventurers, dreamers, and lifelong learners. 
+                Together, we're shaping the future of digital innovation, one project at a time."
+                </p>
+            </div>
+        </div>
+        <div class='about-photo'>
+            <img src="{% static 'main/images/about.jpg' %}">
+        </div>
+    </div>
+
+    <div class="contact-us" id="contact">
+        <div class='contact title'> Connect with Us</div>
+        <div class='contact-container'>
+            <div class='contact-photo'>
+                <img src="{% static 'main/images/contact.jpg' %}">
+            </div>
+            <div class='contact-text'>
+                {% comment %} <div class='about topic'><h1>About Us</h1></div> {% endcomment %}
+                <form class='' action='{% url "home" %}' method='POST'>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1 topic" class="form-label" style="font-weight:600;">Name: </label>
+                        <input type="text" name='name' class="form-control" id="exampleFormControlInput1" placeholder="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label" style="font-weight:600;">Email address: </label>
+                        <input type="email" name='email' class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label" style="font-weight:600;">Message :</label>
+                        <textarea class="form-control" name='message' rows='5' id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <button class='btn' type='submit'>Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container text-center text-md-left">
+            <div class="row text-center text-md-left">
+                <!-- Company Info -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Protify</h5>
+                    <p>Build and showcase your professional portfolio effortlessly with our easy-to-use templates and customization options.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Quick Links</h5>
+                    <p>
+                        <a href="#about-us" onclick="scrollToSection('about')" class="text-white" style="text-decoration: none;">About Us</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-white" style="text-decoration: none;">Services</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-white" style="text-decoration: none;">Portfolio</a>
+                    </p>
+                    <p>
+                        <a href="#contact-us" onclick="scrollToSection('contact')" class="text-white" style="text-decoration: none;">Contact</a>
+                    </p>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Contact</h5>
+                    <p>
+                        <i class="bi bi-house-fill me-3"></i> Chirudih, Giridih, India
+                    </p>
+                    <p>
+                        <i class="bi bi-envelope-fill me-3"></i> grdfaiyaz786@gmail.com
+                    </p>
+                    <p>
+                        <i class="bi bi-phone-fill me-3"></i> + 91 72098 49883
+                    </p>
+                    <p>
+                        <i class="bi bi-printer-fill me-3"></i> + 01 234 567 89
+                    </p>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="col-md-3 col-lg-4 col-xl-4 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Follow Us</h5>
+                    <a href="https://www.instagram.com/__faiyaz_aziz_rizwi_____/" target="_blank" class="btn btn-primary btn-lg btn-floating text-white m-1" style="background-color: #ac2bac;" role="button"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/faiyaz-aziz-rizwi-385754228/" class="btn btn-primary btn-lg btn-floating text-white m-1" target="_blank" style="background-color: #007bb5;" role="button"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://github.com/faiyazAziz" class="btn btn-primary btn-lg btn-floating text-white m-1" target="_blank" style="background-color: #333333;" role="button"><i class="bi bi-github"></i></a>
+                    <a href="#" class="btn btn-primary btn-lg btn-floating text-white m-1" target="_blank" style="background-color: #3b5998;" role="button"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="btn btn-primary btn-lg btn-floating text-white m-1" target="_blank" style="background-color: #55acee;" role="button"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="btn btn-primary btn-lg btn-floating text-white m-1" target="_blank" style="background-color: #dd4b39;" role="button"><i class="bi bi-google"></i></a>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 col-lg-8">
+                    <p class="text-center text-md-left">&copy; 2024 Protify. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        const debounce = (func, wait) => {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        };
+        
+        window.addEventListener('scroll', debounce(() => {
+            var navbar = document.getElementById('navbar');
+            if(window.scrollY > 80){
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }, 10));
+
+        function scrollToSection(id) {
+            var element = document.getElementById(id);
+            var headerOffset = 60; // Adjust this value as needed
+            var elementPosition = element.getBoundingClientRect().top;
+            var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
