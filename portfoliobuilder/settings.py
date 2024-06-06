@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'portfoliobuilder.wsgi.application'
 
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'))
+    'default': dj_database_url.parse('postgres://portify_user:JhCNWaGId7OVWzlDS3aYSzWWOHnpi2Kz@dpg-cpgsece3e1ms73am69rg-a.oregon-postgres.render.com/portify')
 }
 
 
