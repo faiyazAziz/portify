@@ -140,7 +140,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-
+STATIC_URL = '/static/'
 STORAGES = {
 # …
 "staticfiles": {
