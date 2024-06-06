@@ -97,6 +97,18 @@ DATABASES = {
     'default': dj_database_url.config(config('DATABASE_URL'))
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'portify',
+        'USER': 'portify_user',
+        'PASSWORD': 'JhCNWaGId7OVWzlDS3aYSzWWOHnpi2Kz',
+        'HOST': 'dpg-cpgsece3e1ms73am69rg-a',
+        'PORT': '5432',
+    }
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
