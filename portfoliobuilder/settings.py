@@ -141,7 +141,7 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STORAGES = {
 # …
