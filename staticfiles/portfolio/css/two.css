@@ -1,0 +1,101 @@
+#main-header img {
+	width: 100%;
+	height: 100%;
+}
+
+#main-header .portfolio-item {
+	min-width: 25%;
+}
+
+#main-header .portfolio-item:hover {
+	cursor: pointer;
+	opacity: 0.8;
+}
+
+.bg-super-dark {
+	background-color: #111;
+}
+
+/* Timeline container */
+.timeline {
+    list-style-type: none;
+    position: relative;
+    padding-right: 10px;
+    margin: 0;
+  }
+  
+  /* Timeline item */
+  .timeline-item {
+    position: relative;
+    padding: 20px 0;
+  }
+  
+  /* Timeline item before pseudo-element */
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #ffc107; /* Vertical line color */
+  }
+  
+  /* Timeline item after pseudo-element (for the circle) */
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -15px;
+    transform: translateX(-50%);
+    top: 20px;
+    width: 24px; /* Increase the width for a bigger circle */
+    height: 24px; /* Increase the height for a bigger circle */
+    background: #ffc107; /* Circle color */
+    border-radius: 50%;
+    border: 2px solid #fff; /* Optional: white border around the circle */
+  }
+  
+  /* Timeline date */
+  .timeline-date {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ff9800; /* Date color */
+  }
+  
+  /* Timeline item title */
+  .timeline-item h4 {
+    margin-top: 0;
+  }
+  
+  /* Media query for small screens */
+  @media (max-width: 767px) {
+    .timeline-item::before {
+      left: 50%;
+    }
+  
+    .timeline-item::after {
+      left: 50%;
+    }
+  
+    .timeline {
+      padding-left: 0;
+    }
+  }
+  
+
+@media (min-width: 1199px) {
+	#main-header .portfolio-item {
+		padding: 3rem !important;
+	}
+}
+
+@media (max-width: 980px) {
+	#main-header h1.display-4 {
+		font-size: 2.5rem !important;
+	}
+
+	#main-header p.lead {
+		font-size: 1rem;
+	}
+}
