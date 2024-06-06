@@ -31,7 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['portify-1.onrender.com']
 
 # Application definition
 
@@ -141,13 +141,9 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STORAGES = {
-            "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-        },
-    }
+STORAGES = {
+# …
+"staticfiles": {
+"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+},
+}
