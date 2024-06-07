@@ -10,9 +10,14 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static 'main/css/dashboard.css' %}">
+        <style>
+            body{
+                padding: 60px;
+            }
+        </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg fixed-top bg-white shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href='{% url "home" %}'>Portify</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -52,7 +57,7 @@
         </nav>
         
         <!-- Profile Section -->
-        <div class='container my-5'>
+        <div class='container my-3'>
             <div class='bg-light p-4 shadow-sm'>
                 <h4 class='heading pb-3'>Templates Created</h4>
                 <div class='row'>
