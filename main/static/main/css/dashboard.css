@@ -5,7 +5,7 @@
     --background-opacity: 0.25;
 }
 
-body{
+body {
     background: var(--background-color);
     display: flex;
     align-items: center;
@@ -23,46 +23,60 @@ body{
     transition: background-color 0.3s ease;
 }
 
-.nav-left {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: 40%;
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
-.nav-item {
+.navbar-brand{
+    color: var(--primary-color);
+}
+
+.nav-link {
     font-weight: 600;
     color: black;
 }
+
+.nav-item a{
+    margin-right: 30px;
+} 
 
 a{
     text-decoration: none;
     color: inherit;
 }
 
-.logo a{
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.nav-item:hover{
+.nav-link:hover {
     border-bottom: 2px solid gray;
 }
 
-.nav-right{
-    padding-right: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+.profile-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
 }
 
+.heading {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.card {
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
 
 .btn {
     padding: 10px;
     border: 2px solid var(--primary-color);
-    border-radius: 0px;
+    border-radius: 0;
     background: var(--primary-color);
     color: #FFF;
     font-weight: 600;
@@ -71,19 +85,15 @@ a{
 
 .btn:hover {
     border: 2px solid var(--primary-color);
-    /* background: #FFF; */
     color: var(--primary-color);
 }
 
-.heading {
-    color: var(--primary-color);
-    font-weight: bold;
+.copy {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
 }
 
-.profile-img{
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 50%;
+.copy.invisible {
+    display: none;
 }

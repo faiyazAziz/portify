@@ -1,10 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <--<![endif]-->
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,84 +10,94 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static 'main/css/dashboard.css' %}">
-        <style>   
-        </style>
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <nav class="navbar" id='navbar'>
-            <div class="nav-left">
-                <div class="logo"><a href='{% url "home" %}'>Portify</a></div>
-                <div class="nav-item"><a href="">Explore</a></div>
-                <div class="nav-item"><a href="#about-us">Pricing</a></div>
-                <div class="nav-item"><a href='{% url "home"%}'>About Us</a></div>
-                <div class="nav-item"><a href="#contact-us">Contact Us</a></div>
-            </div>
-            <div class="nav-right ">
-                <div class="login btn"><a href='{% url "logout" %}'> Logout  <i class="bi bi-box-arrow-in-right"></i></a></div>
-                {% if portfolio %}
-                    <img class='profile-img' src="{{portfolio.profile_pic.url}}">
-                {% else %}
-                    <img class='profile-img' src='{% static "main/images/boy_profile.jpg" %}' >
-                {% endif %}
+        <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href='{% url "home" %}'>Portify</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-start flex-grow-1 mt-1">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Explore</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#about-us">Pricing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href='{% url "home" %}'>About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact-us">Contact Us</a>
+                            </li>
+                        </ul>
+                        <div class="d-flex">
+                            <a class="btn me-2" href='{% url "logout" %}'>Logout <i class="bi bi-box-arrow-in-right"></i></a>
+                            {% if portfolio %}
+                                <img class="profile-img rounded-circle" src="{{portfolio.profile_pic.url}}">
+                            {% else %}
+                                <img class="profile-img rounded-circle" src='{% static "main/images/boy_profile.jpg" %}' >
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
         
         <!-- Profile Section -->
-        <div class='profile bg-light col-11 shadow p-0 m-3 bg-body-tertiary'>
-            <h4 class='heading p-4 pt-2 pb-0'>Templates Created</h4>
-            <div class='row'>
-                {% if templates %}
-                {% for template in templates %}
-                <div class='col-12' style="display:flex;">
-                    <div class="card m-4" style="width: fit-content; overflow:hidden;">
-                        <img class='p-0 card-img-top' src="{{ template.screenshot.url }}" style="width:400px; height:auto;">
-                        <div class="card-body">
-                            
+        <div class='container my-5'>
+            <div class='bg-light p-4 shadow-sm'>
+                <h4 class='heading pb-3'>Templates Created</h4>
+                <div class='row'>
+                    {% if templates %}
+                    {% for template in templates %}
+                    <div class='col-md-6 col-lg-4 mb-4'>
+                        <div class="card h-100">
+                            <img class='card-img-top' src="{{ template.screenshot.url }}" alt="Template Screenshot">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <strong>Template URL:</strong>
+                                    <a href="{% url 'user_website' template.uid %}">http://{{ request.get_host }}{% url 'user_website' template.uid %} <i class="bi bi-box-arrow-up-right p-2 text-primary"></i></a>
+                                    <i class="bi bi-copy ms-2" style="cursor:pointer;" onclick="copyToClipboard('{{ template.uid }}')"></i>
+                                    <span class="copy invisible" id="{{template.uid}}" style="border:2px solid black;border-radius:5px;padding:5px;">copied</span>
+                                </p>
+                                <p class="card-text"><strong>Created on:</strong> {{ template.created_at|date:"j M Y g:i a" }}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class='m-4'>
-                        <p class="card-text"><strong>Template URL:</strong> 
-                            <a href="{% url 'user_website' template.uid %}">http://{{ request.get_host }}{% url 'user_website' template.uid %} <i class="bi bi-box-arrow-up-right p-2 text-primary" ></i></a>
-                            <i class="bi bi-copy"  style="color:black;border:none;cursor:pointer;" onclick="copyToClipboard('{{ template.uid }}')"></i>
-                            <span class="copy invisible" id="{{template.uid}}" style="border:2px solid black;border-radius:5px;padding:5px;">copied</span>
-                        </p>
-                        <p class="card-text">
-                            <strong >Created on:</strong> {{ template.created_at|date:"j M Y g:i a" }}
-                        </p>
+                    {% endfor %}
+                    {% else %}
+                    <div class="text-center">
+                        <img src='{% static "main/images/no_template.png" %}' class="img-fluid" alt="No Templates">
+                        <div class="btn mt-3"><a href='{% url "portfolio_form" %}' class="text-white">Create Now</a></div>
                     </div>
-                    
+                    {% endif %}
                 </div>
-                {% endfor %}
-                {% else %}
-                <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;">
-                    <img src='{% static "main/images/no_template.png" %}' width="500px"> 
-                    <div class="btn m-2"><a href='{% url "portfolio_form" %}'> Create Now </a> </div>
-                </div>
-                {% endif %}
             </div>
         </div>
-
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
             function copyToClipboard(uid) {
-                var text = "http://127.0.0.1:8000/"+uid+"/";
+                var text = "http://127.0.0.1:8000/" + uid + "/";
                 navigator.clipboard.writeText(text).then(function() {
-                    //alert('Copied to clipboard!');
-                    copy = document.getElementById(uid);
+                    var copy = document.getElementById(uid);
                     copy.classList.remove('invisible');
                     copy.classList.add('visible');
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         copy.classList.add('invisible');
-                    },1000)
+                    }, 1000);
                 }, function(err) {
-                    //console.error('Could not copy text: ', err);
+                    console.error('Could not copy text: ', err);
                 });
             }
-            
         </script>
     </body>
 </html>
