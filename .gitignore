@@ -11,7 +11,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-__pycache__/
+
 db.sqlite3
 *.sqlite3
 
@@ -26,7 +26,7 @@ db.sqlite3
 *.mo
 
 # Django: Ignore files related to migrations
-migrations/
+
 
 # Django: Ignore environment variables files
 .env
