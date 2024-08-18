@@ -1,9 +1,21 @@
-from django.shortcuts import render, redirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Portfolio, Project, Education, Experience, Skill, Template
 from django.core.mail import EmailMessage
 import random
-tempaltes = [{'name':'one','title':'one'},{'name':'two','title':'two'}]
+from .firebase import storage  # Import Firebase storage
+from uuid import uuid4
+base_temp_url_start = "https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2F"
+base_temp_url_end = ".png?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7"
+
+tempaltes = [
+            {'name':'one','title':'one','url':base_temp_url_start+'one.png'+base_temp_url_end},
+            {'name':'two','title':'two','url':base_temp_url_start+'two.png'+base_temp_url_end},
+        ]
+
+def upload_to_firebase(file):
+    filename = f"{uuid4()}_{file.name}"
+    storage.child(f"uploads{filename}").put(file)
+    return storage.child(f"uploads/{filename}").get_url(None)
 
 # Create your views here.
 def show(request,uuid):
@@ -40,9 +52,14 @@ def portfolio_view(request):
         dob = request.POST.get('portfolio_dob')
         profile_pic = request.FILES.get('portfolio_profile_pic')
 
-        Portfolio.objects.create(user=user, name=name, email=email, number=number, role=role,gender=gender, about_me=about_me, dob=dob, profile_pic=profile_pic)
+        profile_pic_url = upload_to_firebase(profile_pic) if profile_pic else ''
+
+        Portfolio.objects.create(
+            user=user, name=name, email=email, number=number, role=role,
+            gender=gender, about_me=about_me, dob=dob, profile_pic=profile_pic_url
+        )
         return redirect('portfolio_form')
-    
+
     return render(request, 'portfolio/portfolio_form.html')
 
 def project_view(request):
@@ -52,12 +69,16 @@ def project_view(request):
         project_description = request.POST.get('project_description')
         project_url = request.POST.get('project_url')
         project_image = request.FILES.get('project_image')
-        
-        Project.objects.create(user=user, project_title=project_title, project_description=project_description, project_url=project_url, project_image=project_image)
-        return redirect('portfolio_form')
-    
-    return render(request, 'portfolio/portfolio_form.html')
 
+        project_image_url = upload_to_firebase(project_image) if project_image else ''
+
+        Project.objects.create(
+            user=user, project_title=project_title, project_description=project_description,
+            project_url=project_url, project_image=project_image_url
+        )
+        return redirect('portfolio_form')
+
+    return render(request, 'portfolio/portfolio_form.html')
 def education_view(request):
     if request.method == 'POST':
         user = request.user
@@ -121,5 +142,6 @@ def save_template(request,template):
     user = request.user
     print(str(int(random.random()*1000)))
     cond = user.username + template + str(int(random.random()*1000))
-    Template.objects.create(user=user,name=template,cond=cond)
+    screenshot = base_temp_url_start + template + base_temp_url_end
+    Template.objects.create(user=user,name=template,cond=cond,screenshot=screenshot)
     return redirect('dashboard',user.username)
