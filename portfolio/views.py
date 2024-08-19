@@ -15,7 +15,7 @@ tempaltes = [
 def upload_to_firebase(file):
     filename = f"{uuid4()}_{file.name}"
     storage.child(f"uploads{filename}").put(file)
-    return storage.child(f"uploads/{filename}").get_url(None)
+    return storage.child(f"uploads{filename}").get_url(None)
 
 # Create your views here.
 def show(request,uuid):
