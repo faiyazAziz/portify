@@ -38,7 +38,7 @@ def form_show(request):
         skills = Skill.objects.filter(user=user)
         projects = Project.objects.filter(user=user)
         experiences = Experience.objects.filter(user=user)
-        return render(request,'portfolio/portfolio_form.html',{'educations':educations,'skills':skills,'projects':projects,'templates':tempaltes})
+        return render(request,'portfolio/portfolio_form.html',{'educations':educations,'skills':skills,'projects':projects,'templates':tempaltes,'experiences':experiences})
     return redirect('register')
 
 def portfolio_view(request):
