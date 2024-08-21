@@ -137,13 +137,13 @@
             <div class='row'>
                 {% if experiences|length > 0 %}
                 <div class='col-6'>
-                <h3>Education</h3>
+                <h3>Experience</h3>
                 <ul class="timeline">
                     {% for experience in experiences %}
                     <li class="timeline-item">
                         <h5>{{experience.job_title}} at {{experience.company_name}}</h5>
-                        <p class="timeline-date">{{education.start_date}} - {{education.end_date}}</p>
-                        <p>{{education.description}}</p>
+                        <p class="timeline-date">{{experience.start_date}} - {% if experience.end_date %}{{experience.end_date}}{% else %}Present{% endif %}</p>
+                        <p>{{experience.description}}</p>
                     </li>
                     {% endfor %}
                     <!-- Add more timeline items as needed -->

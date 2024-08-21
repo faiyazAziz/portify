@@ -24,10 +24,11 @@ def show(request,uuid):
     template_name = f"portfolio/{temp.name}.html"
     user = temp.user
     educations = Education.objects.filter(user=user)
+    experiences = Experience.objects.filter(user=user)
     # print(educations)
     skills = Skill.objects.filter(user=user)
     projects = Project.objects.filter(user=user)
-    return render(request,template_name,{'user':user,'educations':educations,'skills':skills,'projects':projects,'uid':uuid})
+    return render(request,template_name,{'user':user,'educations':educations,'skills':skills,'projects':projects,'uid':uuid,'experiences':experiences})
 
 def form_show(request):
     if request.user.is_authenticated:
@@ -41,8 +42,16 @@ def form_show(request):
     return redirect('register')
 
 def portfolio_view(request):
+    user = request.user
+    try:
+        # Try to get the existing portfolio
+        portfolio = Portfolio.objects.get(user=user)
+       
+    except Portfolio.DoesNotExist:
+        # If it doesn't exist, initialize it as None
+        portfolio = None
+
     if request.method == 'POST':
-        user = request.user
         name = request.POST.get('portfolio_name')
         email = request.POST.get('portfolio_email')
         number = request.POST.get('portfolio_number')
@@ -51,13 +60,29 @@ def portfolio_view(request):
         gender = request.POST.get('portfolio_gender')
         dob = request.POST.get('portfolio_dob')
         profile_pic = request.FILES.get('portfolio_profile_pic')
+        
 
-        profile_pic_url = upload_to_firebase(profile_pic) if profile_pic else ''
-
-        Portfolio.objects.create(
-            user=user, name=name, email=email, number=number, role=role,
-            gender=gender, about_me=about_me, dob=dob, profile_pic=profile_pic_url
-        )
+        if portfolio:
+            # Update the existing portfolio
+            portfolio.name = name
+            portfolio.email = email
+            portfolio.number = number
+            portfolio.role = role
+            portfolio.gender = gender
+            portfolio.about_me = about_me
+            portfolio.dob = dob
+            if profile_pic:
+                # Update profile picture only if a new one is uploaded
+                portfolio.profile_pic = upload_to_firebase(profile_pic)
+            portfolio.save()
+        else:
+            # Create a new portfolio
+            profile_pic_url = upload_to_firebase(profile_pic) if profile_pic else ''
+            Portfolio.objects.create(
+                user=user, name=name, email=email, number=number, role=role,
+                gender=gender, about_me=about_me, dob=dob, profile_pic=profile_pic_url
+            )
+        
         return redirect('portfolio_form')
 
     return render(request, 'portfolio/portfolio_form.html')

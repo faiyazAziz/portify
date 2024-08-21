@@ -264,21 +264,19 @@
           </div>
 
           <ol class="timeline-list">
-
+            {% for experience in experiences %}
             <li class="timeline-item">
 
-              <h4 class="h4 timeline-item-title">Creative director</h4>
+              <h4 class="h4 timeline-item-title">{{experience.job_title}} at {{experience.company_name}}</h4>
 
-              <span>2015 — Present</span>
+              <span>{{experience.start_date}} — {% if experience.end_date %}{{experience.end_date}}{% else %}Present{% endif %}</span>
 
               <p class="timeline-text">
-                Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas
-                molestias
-                exceptur.
+                {{experience.description}}
               </p>
 
             </li>
-
+            {% endfor %}
           </ol>
 
         </section>
