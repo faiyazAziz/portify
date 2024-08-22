@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import portfolio_view, project_view, education_view, experience_view, skill_view,show,form_show,handle_mail,save_template
+from .views import portfolio_view, project_view, education_view, experience_view, skill_view,show,form_show,handle_mail,save_template, view_template_three
 
 urlpatterns = [
     path('<uuid:uuid>/',show,name='user_website'),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('portfolio-form/', form_show, name='portfolio_form'),
     path('send-mail/<uuid:uid>',handle_mail,name='send_mail'),
     path('save-template/<template>',save_template,name='save_template'),
+    path('view-template-three/', view_template_three, name='view_template_three'),
 ]

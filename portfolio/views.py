@@ -10,6 +10,7 @@ base_temp_url_end = ".png?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7"
 tempaltes = [
             {'name':'one','title':'one','url':base_temp_url_start+'one.png'+base_temp_url_end},
             {'name':'two','title':'two','url':base_temp_url_start+'two.png'+base_temp_url_end},
+            {'name':'three','title':'three','url':base_temp_url_start+'three.png'+base_temp_url_end},
         ]
 
 def upload_to_firebase(file):
@@ -170,3 +171,30 @@ def save_template(request,template):
     screenshot = base_temp_url_start + template + base_temp_url_end
     Template.objects.create(user=user,name=template,cond=cond,screenshot=screenshot)
     return redirect('dashboard',user.username)
+
+
+def view_template_three(request):
+    # Set user to None for design testing
+    user = None
+    
+    # Dummy data for testing the design
+    educations = [
+        {'college_name': 'Sample College', 'course_name': 'Sample Course', 'start_date': '2020', 'passing_date': '2024'}
+    ]
+    experiences = [
+        {'job_title': 'Sample Job', 'company_name': 'Sample Company', 'start_date': '2022', 'end_date': '2024', 'description': 'Sample job description'}
+    ]
+    skills = [
+        {'name': 'Sample Skill', 'score': '80'}
+    ]
+    projects = [
+        {'project_title': 'Sample Project', 'project_description': 'Sample project description', 'project_url': 'http://example.com', 'project_image': 'http://placekitten.com/200/300'}
+    ]
+    
+    return render(request, 'portfolio/three.html', {
+        'user': user,
+        'educations': educations,
+        'experiences': experiences,
+        'skills': skills,
+        'projects': projects
+    })
