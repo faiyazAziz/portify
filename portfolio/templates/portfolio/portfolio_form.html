@@ -401,7 +401,7 @@
                         {% for template in templates %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
                             <div class="t-img">
-                            <img src="{% static 'portfolio/images/'|add:template.name|add:'.png' %}"  class="d-block w-100" alt="{{ template.title }}">
+                            <img src="{{template.url}}"  class="d-block w-100" alt="{{ template.title }}">
                             <button type='submit' class='t-img-btn' onclick="redirectTo('{{template.name}}')">Select</button>
                             </div>
                             <div class="carousel-caption d-none d-md-block">

@@ -5,7 +5,7 @@ import random
 from .firebase import storage  # Import Firebase storage
 from uuid import uuid4
 base_temp_url_start = "https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2F"
-base_temp_url_end = ".png?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7"
+base_temp_url_end = "?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7"
 
 tempaltes = [
             {'name':'one','title':'one','url':base_temp_url_start+'one.png'+base_temp_url_end},
