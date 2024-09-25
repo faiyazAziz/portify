@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment for {{ plan }} Plan</title>
+    <!-- Include Razorpay checkout script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+  <body>
+    <h1>Proceeding with Payment for {{ plan }} Plan</h1>
+
+    <script>
+      var options = {
+        key: "{{ razorpay_key_id }}", // Razorpay Key ID
+        amount: "{{ amount }}", // Amount in paise
+        currency: "{{ currency }}",
+        name: "Protify",
+        description: "Payment for {{ plan }} Plan",
+        order_id: "{{ order_id }}", // Razorpay Order ID
+        handler: function (response) {
+          // This function executes when payment is successful
+          alert("Payment successful!");
+          // You can now redirect the user or send the details to your server
+          fetch("{% url 'payment_success' %}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: `razorpay_payment_id=${response.razorpay_payment_id}&razorpay_order_id=${response.razorpay_order_id}&razorpay_signature=${response.razorpay_signature}`,
+          })
+            .then((res) => res.json())
+            .then((data) => console.log(data));
+        },
+        theme: {
+          color: "#528FF0",
+        },
+      };
+
+      var rzp1 = new Razorpay(options);
+
+      rzp1.open(); // Open Razorpay checkout automatically
+    </script>
+  </body>
+</html>
