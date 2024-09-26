@@ -33,8 +33,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# ALLOWED_HOSTS = ['portify-in.onrender.com', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['portify-in.onrender.com', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -85,30 +85,18 @@ WSGI_APPLICATION = 'portfoliobuilder.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# user=postgres.wkxpshnzqzkhqmjqtwhy password=[YOUR-PASSWORD] host=aws-0-ap-southeast-1.pooler.supabase.com port=6543 dbname=postgres
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres.wkxpshnzqzkhqmjqtwhy',
-#         'PASSWORD': 'Portify@123',  # Replace with your actual password
-#         'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
-#         'PORT': '6543',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
+
 # Replace the SQLite DATABASES configuration with PostgreSQL:
-# DATABASES = {
-#     'default': dj_database_url.parse(config('DIRECT_URL'))
-# }
+DATABASES = {
+    'default': dj_database_url.parse(config('DIRECT_URL'))
+}
 
 
 
