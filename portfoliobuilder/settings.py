@@ -93,6 +93,18 @@ WSGI_APPLICATION = 'portfoliobuilder.wsgi.application'
 #     }
 # }
 
+# user=postgres.wkxpshnzqzkhqmjqtwhy password=[YOUR-PASSWORD] host=aws-0-ap-southeast-1.pooler.supabase.com port=6543 dbname=postgres
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.wkxpshnzqzkhqmjqtwhy',
+#         'PASSWORD': 'Portify@123',  # Replace with your actual password
+#         'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+#         'PORT': '6543',
+#     }
+# }
+
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
     'default': dj_database_url.parse(config('DIRECT_URL'))
