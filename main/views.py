@@ -5,9 +5,13 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib import messages
 from .forms import ContactForm
 from django.core.mail import EmailMessage
+from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+import razorpay
 from portfolio.models import Project,Portfolio,Experience,Education, Template
 
+
+razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 # Create your views here.
 def home(request):
     if request.method == 'POST':
@@ -85,3 +89,36 @@ def dashboard_view(request,username):
     base_url = "http://"+request.META['HTTP_HOST']
     print(base_url)
     return render(request,'main/dashboard.html',{'user':user,"portfolio":portfolio,'templates':templates,'base_url':base_url})
+
+
+
+
+def create_order(request, plan):
+    pricing = {
+        'basic': 0,
+        'standard': 999,   # ₹9.99 in paise
+        'premium': 2999,   # ₹29.99 in paise
+    }
+
+    amount = pricing.get(plan.lower(), 0)
+    if amount == 0:
+        return messages.error("Invalid plan selected.")
+    order = razorpay_client.order.create({
+        "amount": amount * 100,  # Razorpay expects amount in paise (1 INR = 100 paise)
+        "currency": "INR",
+        "payment_capture": "1"  # Auto capture the payment
+    })
+
+    context = {
+        'razorpay_key_id': settings.RAZORPAY_KEY_ID,
+        'order_id': order['id'],
+        'amount': amount * 100,  # In paise
+        'currency': "INR",
+        'plan': plan,
+    }
+
+    return render(request, 'main/payment_redirect.html', context)
+
+@csrf_exempt
+def payment_success(request):
+    return messages.success("Payment was successful")

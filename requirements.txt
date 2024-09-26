@@ -49,3 +49,4 @@ tzdata==2023.4
 urllib3==1.26.19
 whitenoise==6.6.0
 wsproto==1.2.0
+razorpay
