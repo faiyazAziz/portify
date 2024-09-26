@@ -44,16 +44,6 @@
 - Visit `localhost:8000` in your browser.
 - Create an account, choose a template, and start building your portfolio.
 
-## Deployment
-To deploy on platforms like Render, use the following command:
-```bash
-git push render master
-```
-
 ## Contributing
 Feel free to raise issues or submit pull requests for improvements.
-
-## License
-This project is licensed under the MIT License.
-
---- 
+ 
