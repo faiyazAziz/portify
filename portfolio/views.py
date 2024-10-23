@@ -5,12 +5,12 @@ import random
 from .firebase import storage  # Import Firebase storage
 from uuid import uuid4
 base_temp_url_start = "https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2F"
-base_temp_url_end = "?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7"
+base_temp_url_end = ".png?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7"
 
 tempaltes = [
-            {'name':'one','title':'one','url':base_temp_url_start+'one.png'+base_temp_url_end},
-            {'name':'two','title':'two','url':base_temp_url_start+'two.png'+base_temp_url_end},
-            {'name':'three','title':'three','url':base_temp_url_start+'three.png'+base_temp_url_end},
+            {'name':'one','title':'one','url':"https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2Fone.png?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7"},
+            {'name':'two','title':'two','url':"https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2Ftwo.png?alt=media&token=4ffa26a7-a907-42de-bdb3-d9cfd86c410e"},
+            {'name':'three','title':'three','url':"https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2Fthree.png?alt=media&token=16c06294-19a1-448b-99ec-d4e4c5faba3c"},
         ]
 
 def upload_to_firebase(file):
@@ -169,6 +169,12 @@ def save_template(request,template):
     print(str(int(random.random()*1000)))
     cond = user.username + template + str(int(random.random()*1000))
     screenshot = base_temp_url_start + template + base_temp_url_end
+    if template == 'three':
+        screenshot = 'https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2Fthree.png?alt=media&token=16c06294-19a1-448b-99ec-d4e4c5faba3c'
+    if template == 'two':
+        screenshot = 'https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2Ftwo.png?alt=media&token=4ffa26a7-a907-42de-bdb3-d9cfd86c410e'
+    if template == 'one':
+        screenshot = 'https://firebasestorage.googleapis.com/v0/b/fir-63517.appspot.com/o/uploads%2Fone.png?alt=media&token=5523cb42-0762-48dc-bc08-dbb3b3c1f0a7'
     Template.objects.create(user=user,name=template,cond=cond,screenshot=screenshot)
     return redirect('dashboard',user.username)
 
